@@ -1689,12 +1689,14 @@ int RDMA_Manager::modify_qp_to_init(struct ibv_qp* qp) {
 ******************************************************************************/
 int RDMA_Manager::modify_qp_to_rtr(struct ibv_qp* qp, uint32_t remote_qpn,
                                    uint16_t dlid, uint8_t* dgid) {
+  rdma_config.ib_port = 1;
+  rdma_config.gid_idx = 1;
   struct ibv_qp_attr attr;
   int flags;
   int rc;
   memset(&attr, 0, sizeof(attr));
   attr.qp_state = IBV_QPS_RTR;
-  attr.path_mtu = IBV_MTU_4096;
+  attr.path_mtu = IBV_MTU_1024;
   attr.dest_qp_num = remote_qpn;
   attr.rq_psn = 0;
   attr.max_dest_rd_atomic = 1;
